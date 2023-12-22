@@ -6,7 +6,6 @@ from fastapi.exceptions import RequestValidationError
 ERROR_MESSAGES = {
     "int_parsing": "{parameter_name} должен быть числом",
     "greater_than_equal": "{parameter_name} должен быть больше нуля",
-    "unknown": "Неизвестная ошибка",
 }
 
 
