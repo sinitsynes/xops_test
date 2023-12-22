@@ -7,7 +7,6 @@ from app.api.schemas import (
     AddLinksRequest,
     AddLinksResponse,
     VisitedDomainsResponse,
-    VisitedDomainsRequest,
 )
 from app.api.manager import WatcherManager
 
@@ -27,5 +26,4 @@ async def visited_domains(
     session=Depends(get_session),
 ):
     manager = WatcherManager(session)
-    request = VisitedDomainsRequest(start_date=from_parameter, end_date=to_parameter)
-    return await manager.get_visited_domains(request)
+    return await manager.get_visited_domains(from_parameter, to_parameter)

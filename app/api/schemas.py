@@ -18,8 +18,3 @@ class AddLinksResponse(StatusResponse):
 
 class VisitedDomainsResponse(StatusResponse):
     domains: list[str]
-
-
-class VisitedDomainsRequest(BaseModel):
-    start_date: NonNegativeInt | None = None
-    end_date: NonNegativeInt | None = None

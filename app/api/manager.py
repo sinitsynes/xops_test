@@ -2,7 +2,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.schemas import (
     AddLinksRequest,
     AddLinksResponse,
-    VisitedDomainsRequest,
     VisitedDomainsResponse,
 )
 from app.db.models import VisitedLink
@@ -24,10 +23,6 @@ class WatcherManager:
         await self.db.write_to_db(links)
         return AddLinksResponse()
 
-    async def get_visited_domains(
-        self, request: VisitedDomainsRequest
-    ) -> VisitedDomainsResponse:
-        domains = await self.db.get_visited_domains(
-            request.start_date, request.end_date
-        )
+    async def get_visited_domains(self, start_date: int, end_date: int) -> VisitedDomainsResponse:
+        domains = await self.db.get_visited_domains(start_date, end_date)
         return VisitedDomainsResponse(domains=domains)
