@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, NonNegativeInt
+from pydantic import BaseModel
 
 
 class StatusResponse(BaseModel):
