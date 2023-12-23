@@ -4,6 +4,7 @@ from fastapi.exceptions import RequestValidationError
 
 
 ERROR_MESSAGES = {
+    "missing": "Неверный запрос {parameter_value}",
     "int_parsing": "{parameter_name} должен быть числом. Неверный ввод: {parameter_value}",
     "greater_than_equal": "{parameter_name} должен быть больше нуля. Неверный ввод: {parameter_value}",
     "url_type": "{parameter_name} должен содержать HTTP или HTTPS ссылки. Неверный ввод: {parameter_value}"

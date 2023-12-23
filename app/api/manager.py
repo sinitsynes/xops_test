@@ -16,7 +16,7 @@ class WatcherManager:
 
     @staticmethod
     def make_link(link: HttpUrl, visited_at: int) -> VisitedLink:
-        return VisitedLink(link=link, visited_at=visited_at, domain=link.host)
+        return VisitedLink(link=link.unicode_string(), visited_at=visited_at, domain=link.host)
 
     async def save_links(self, request: AddLinksRequest) -> AddLinksResponse:
         links = [self.make_link(link, request.visited_at) for link in request.links]
