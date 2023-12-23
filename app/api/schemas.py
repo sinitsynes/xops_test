@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 
 class StatusResponse(BaseModel):
@@ -9,7 +9,7 @@ class StatusResponse(BaseModel):
 
 class AddLinksRequest(BaseModel):
     visited_at: int = datetime.now().timestamp()
-    links: list[str]
+    links: list[HttpUrl]
 
 
 class AddLinksResponse(StatusResponse):
