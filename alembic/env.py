@@ -5,6 +5,7 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+from app.db.connection import make_dsn
 from app.db.models import BaseModel
 
 from alembic import context
@@ -42,7 +43,15 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    cmd_line_env = context.get_x_argument(as_dictionary=True).get('db_env')
+    if cmd_line_env == 'master_db':
+        config.set_main_option('sqlalchemy.url', make_dsn())
+        url = config.get_main_option("sqlalchemy.url")
+    elif cmd_line_env == 'test_db':
+        config.set_main_option('sqlalchemy.url', make_dsn(test=True))
+        url = config.get_main_option("sqlalchemy.url")
+    else:
+        raise TypeError('Неизвестное значение аргумента db_env')
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -66,10 +75,17 @@ async def run_async_migrations() -> None:
     and associate a connection with the context.
 
     """
+    cmd_line_env = context.get_x_argument(as_dictionary=True).get('db_env')
+    if cmd_line_env == 'master_db':
+        config.set_main_option('sqlalchemy.url', make_dsn())
+    elif cmd_line_env == 'test_db':
+        config.set_main_option('sqlalchemy.url', make_dsn(test=True))
+    else:
+        raise TypeError('Неизвестное значение аргумента db_env')
 
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
+        prefix='sqlalchemy.',
         poolclass=pool.NullPool,
     )
 

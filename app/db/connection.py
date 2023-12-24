@@ -7,10 +7,11 @@ from app.config import settings
 def make_dsn(test: bool = False):
     host = settings.db_host
     user = settings.db_user
+    password = settings.db_password
     port = settings.db_port
     if not test:
-        return f"postgresql+asyncpg://{user}@{host}:{port}/xops_test"
-    return f"postgresql+asyncpg://{user}@{host}:{port}/test_db"
+        return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{settings.db_name}"
+    return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{settings.test_db_name}"
 
 
 engine = create_async_engine(make_dsn())
